@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Memory Lane</title>
+  <style>
+    html{
+      scroll-behavior: smooth;
+    }
+    body {
+   
+        font-family: Arial;
+        margin: 0;
+        background-color: black;
+        overflow-x: hidden;
+      }
+      .back{
+        width:60px;
+        height:60px;
+        background-image: url('images/back.png');
+        background-size: cover;
+        border-radius: 60px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+        float: left;
+        margin-left:20px;
+        margin-top:-40px;
+    }
+      ::-webkit-scrollbar {
+          width: 10px;
+      }
+      
+      ::-webkit-scrollbar-track {
+          background-color: rgb(236, 165, 95);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          box-shadow: inset 0 0 20px rgb(245, 125, 5);
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+      .full {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .full .content {
+        background-color: rgba(0,0,0,0.75) !important;
+        height: 100%;
+        width: 100%;
+        display: grid;
+      }
+      .full .content img {
+        left: 50%;
+        transform: translate3d(0, 0, 0);
+        animation: zoomin 1s ease;
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+      }
+      .byebye {
+        opacity: 0;
+      }
+      .byebye:hover {
+        transform: scale(0.2) !important;
+      }
+      .gallery {
+        display: grid;
+        grid-column-gap: 8px;
+        grid-row-gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-auto-rows: 8px;
+      }
+      .gallery img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 0 16px #333;
+        transition: all 1.5s ease;
+      }
+      .gallery img:hover {
+        box-shadow: 0 0 32px #333;
+      }
+      .gallery .content {
+        padding: 4px;
+      }
+      .gallery .gallery-item {
+        transition: grid-row-start 300ms linear;
+        transition: transform 300ms ease;
+        transition: all 0.5s ease;
+        cursor: pointer;
+      }
+      .gallery .gallery-item:hover {
+        transform: scale(1.025);
+      }
+      @media (max-width: 600px) {
+        .gallery {
+          grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+        }
+      }
+      @media (max-width: 400px) {
+        .gallery {
+          grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+        }
+      }
+      @-moz-keyframes zoomin {
+        0% {
+          max-width: 50%;
+          transform: rotate(-30deg);
+          filter: blur(4px);
+        }
+        30% {
+          filter: blur(4px);
+          transform: rotate(-80deg);
+        }
+        70% {
+          max-width: 50%;
+          transform: rotate(45deg);
+        }
+        100% {
+          max-width: 100%;
+          transform: rotate(0deg);
+        }
+      }
+      @-webkit-keyframes zoomin {
+        0% {
+          max-width: 50%;
+          transform: rotate(-30deg);
+          filter: blur(4px);
+        }
+        30% {
+          filter: blur(4px);
+          transform: rotate(-80deg);
+        }
+        70% {
+          max-width: 50%;
+          transform: rotate(45deg);
+        }
+        100% {
+          max-width: 100%;
+          transform: rotate(0deg);
+        }
+      }
+      @-o-keyframes zoomin {
+        0% {
+          max-width: 50%;
+          transform: rotate(-30deg);
+          filter: blur(4px);
+        }
+        30% {
+          filter: blur(4px);
+          transform: rotate(-80deg);
+        }
+        70% {
+          max-width: 50%;
+          transform: rotate(45deg);
+        }
+        100% {
+          max-width: 100%;
+          transform: rotate(0deg);
+        }
+      }
+      @keyframes zoomin {
+        0% {
+          max-width: 50%;
+          transform: rotate(-30deg);
+          filter: blur(4px);
+        }
+        30% {
+          filter: blur(4px);
+          transform: rotate(-80deg);
+        }
+        70% {
+          max-width: 50%;
+          transform: rotate(45deg);
+        }
+        100% {
+          max-width: 100%;
+          transform: rotate(0deg);
+        }
+      }
+      .unordered{
+        position:absolute;
+        margin:0;
+        padding:0;
+      }
+      
+      .polaroids{
+        text-align:center;
+        display:inline-block;
+        list-style:none;
+        position:relative;
+        border:solid 12px #fff;
+        background:#fff;
+        box-shadow:0 0 15px 0px #555;
+        transition:all 1s ease;
+        -o-transition:all 1s ease;
+        -moz-transition:all 1s ease;
+        -webkit-transition:all 1s ease;
+        top:150px;
+        left: 150px;
+      }
+      
+      
+      .polaroids:hover{
+        top:0px;
+        opacity:0.5;
+      }
+      
+      .polaroids:nth-child(1){
+          transform:rotate(10deg);
+      }
+      
+      .polaroids:nth-child(2){
+          transform:rotate(0deg);
+      }
+      
+      .polaroids:nth-child(3){
+          transform:rotate(-10deg);
+      }
+      
+      .polaroids:nth-child(4){
+          transform:rotate(20deg);
+      }
+      
+      .polaroids:nth-child(5){
+        transform:rotate(-30deg);
+      }
+    
+      p{
+        margin:-15px 0 0 0;
+      }
+      
+      .light{
+        border-radius:50%;
+        position:absolute;
+        left:0;
+        right:0;
+        width:700px;
+        height:700px;
+        background:#fff;
+        filter:blur(100px);
+        opacity:0.3;
+        pointer-events:none;
+      }
+
+
+      .christmas-lights li {
+        --christmas-lights-1: #057d70; /*color - 1*/
+        --christmas-lights-2: #d41a21; /*color - 2*/
+        --christmas-lights-3: #ffd700; /*color - 3*/
+        animation-duration: 2s;
+        animation-fill-mode: both;
+        animation-iteration-count: infinite;
+        animation-name: flash-1;
+        border-radius: 50%;
+        display: inline-block;
+        height: 20px;
+        margin: 25px 20px;
+        position: relative;
+        width: 20px;
+    }
+      
+    .christmas-lights {
+        left: 0;
+        margin: 0;
+        pointer-events: none;
+        position: fixed;
+        right: 0;
+        top: -15px;
+        white-space: nowrap;
+        width: 100%;
+        z-index: 100;
+    }
+      
+  
+      
+   
+      
+  
+      
+    .christmas-lights li:before {
+        content: "";
+        position: absolute;
+        background: #505050;
+        width: 10px;
+        height: 10px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        top: -9px;
+        left: 5px;
+    }
+      
+    .christmas-lights li:after {
+        content: "";
+        top: -23px;
+        left: 10px;
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        border-bottom: solid #505050 2px;
+        border-radius: 50%;
+    }
+      
+    .christmas-lights li:last-child:after {
+        content: none;
+    }
+      
+    .christmas-lights li:first-child {
+        margin-left: -40px;
+    }
+      
+    .christmas-lights li:nth-child(2n+1) {
+        background: var(--christmas-lights-1);
+        box-shadow: 0px 5px 24px 3px rgb(249 212 129);
+        animation-name: flash-2;
+        animation-duration: 0.4s;
+    }
+      
+    .christmas-lights li:nth-child(4n+2) {
+        background: var(--christmas-lights-2);
+        box-shadow: 0px 5px 24px 3px var(--christmas-lights-2);
+        animation-name: flash-3;
+        animation-duration: 1.1s;
+    }
+      
+    .christmas-lights li:nth-child(odd) {
+        animation-duration: 1.8s;
+    }
+      
+    .christmas-lights li:nth-child(3n+1) {
+          animation-duration: 1.4s;
+    }
+      
+    @keyframes flash-1 {
+        0%, 100% {
+            background: var(--christmas-lights-1);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-1);
+        }
+        50% {
+            background: var(--christmas-lights-2);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-2);
+        }
+    }
+      
+    @keyframes flash-2 {
+        0%, 100% {
+            background: var(--christmas-lights-2);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-2);
+        }
+        50% {
+            background: var(--christmas-lights-3);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-3);
+        }
+    }
+      
+    @keyframes flash-3 {
+        0%, 100% {
+            background: var(--christmas-lights-3);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-3);
+        }
+        50% {
+            background: var(--christmas-lights-1);
+            box-shadow: 0px 5px 24px 3px var(--christmas-lights-1);
+        }
+    }
+     
+    @media (max-width: 1024px){
+      .christmas-lights[data-position="left"] {
+          left: -14px;
+      }
+     
+      .christmas-lights[data-position="right"] {
+          right: -14px;
+      }
+       
+      .christmas-lights[data-position="left"],
+      .christmas-lights[data-position="right"] {
+        height: 100vh;
+      }
+    }
+
+
+  
+    .butt {
+      margin:0;
+      padding:0;
+      display:flex;
+      position: absolute;
+      top: 19%;
+      left:25%;
+      transform: translate(-50%, -50%);
+      
+    }
+    
+    .butt li {
+      list-style:none;
+      margin: 0 15px;
+    }
+    
+    .butt li a {
+      position: relative;
+      display: block;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      background: #171515;
+      border-radius: 50%;
+      font-size: 30px;
+      color: #666;
+      transition: .5s;
+    }
+    
+    .butt li a:before {
+      content: '';
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background: #d35400;
+      transition: .5s;
+      transform: scale(.9);
+      z-index: -1;
+    }
+    
+    #o:hover:before {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px #d35400;
+      filter: blur(3px);
+    }
+    
+    #o:hover {
+      color: #d35400;
+      box-shadow: 0 0 15px #d35400;
+      text-shadow: 0 0 15px #d35400;
+    }
+
+    #y:hover:before {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px #ebdc0e;
+      filter: blur(3px);
+    }
+    
+    #y:hover {
+      color: #ebdc0e;
+      box-shadow: 0 0 15px #ebdc0e;
+      text-shadow: 0 0 15px #ebdc0e;
+    }
+
+    #g:hover:before {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px #2ae205;
+      filter: blur(3px);
+    }
+    
+    #g:hover {
+      color: #2ae205;
+      box-shadow: 0 0 15px #2ae205;
+      text-shadow: 0 0 15px #2ae205;
+    }
+
+
+
+    .flip-card {
+
+      width: 300px;
+      height: 300px;
+      float: left;
+      margin-left: 30px;
+      
+      }
+      
+      .flip-card-inner {
+      
+      width: 100%;
+      height: 100%;
+      
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      
+      }
+      
+      .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+      }
+      
+      .flip-card-front, .flip-card-back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+      
+      }
+      
+      .flip-card-front {
+        background: #41295a;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2F0743, #41295a);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2F0743, #41295a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+      
+      color: black;
+      }
+      
+      .flip-card-back {
+      background-color: #2980b9;
+      
+      color: white;
+      transform: rotateY(180deg);
+      }
+      .divide{
+        width: 80%;
+        border: 1px black
+      }
+     
+
+  </style>
+  <body>
+    
+    <center>
+      <div>
+        <div class="container">
+          <ul class="butt">
+            <li><a href="#section1" style="text-decoration: none;" id="o">1</a></li>
+            <li><a href="#section2" style="text-decoration: none;" id="y">2</a></li>
+            <li><a href="#section3" style="text-decoration: none;"id="g">3</a></li>
+            <li><a href="#section4" style="text-decoration: none;">4</a></li>
+            <li><a href="#section5" style="text-decoration: none;">5</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+
+
+      <div id="section1">
+
+    
+    <h3></h3>
+    <br><br>
+    <h1>GALLERY</h1>
+    <button onclick="navigate()" class="back"></button>
+
+    <br><br><br> 
+     <div class="gallery" id="gallery">
+         <div class="gallery-item">
+             <div class="content"><img src="images/m1.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m2.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m3.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m4.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m5.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m6.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m7.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m8.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m9.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m10.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m11.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m12.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m13.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m14.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m15.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m16.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m17.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m18.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m19.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m20.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m21.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m22.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m23.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m24.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m25.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m26.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m27.jpg" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m28.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m29.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m30.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m31.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m32.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m33.JPG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m34.PNG" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m35.png" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m36.png" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m37.png" alt="" loading="lazy"></div>
+         </div>
+         <div class="gallery-item">
+             <div class="content"><img src="images/m38.png" alt="" loading="lazy"></div>
+         </div>
+     </div>
+    </div>
+<br><br><br><br>
+<div>
+  
+<div id="section2">
+ 
+  
+  <ul class="unordered">
+    <li class="polaroids"><img src="images/i1.JPG" width="200">
+      </li>
+    <li class="polaroids"><img src="images/i2.JPG" width="200"/>
+      </li>
+    <li class="polaroids"><img src="images/i3.jpg" width="200"/>
+      </li>
+    <li class="polaroids"><img src="images/i4.JPG" width="200"/>
+      </li>
+    <li class="polaroids"><img src="images/i5.PNG" width="100"/>
+      </li>
+  </ul>
+ 
+  <div class="light"></div>
+  
+  
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div>
+ 
+<div id="section3">
+
+<h1>Card Flip </h1>
+<h3>Zak~Sad Collages</h3>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>1</h1> 
+        
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c1.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>2</h1> 
+        
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c2.png" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>3</h1> 
+         
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c3.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>4</h1> 
+      
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c4.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+<hr class="divide">
+
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>5</h1> 
+      
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c5.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>6</h1> 
+     
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c6.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>7</h1> 
+      
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c7.PNG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <h1>8</h1> 
+        
+    </div>
+    <div class="flip-card-back">
+        <img src="images/c8.JPG" style="width:300px;height:300px;">
+    </div>
+  </div>
+</div>
+
+
+<hr class="divide">
+
+</div>
+
+
+  
+  
+  </center>
+
+
+    </center>
+    <script src="main.js"></script>
+<script>
+    var gallery = document.querySelector('#gallery');
+    var getVal = function (elem, style) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); };
+    var getHeight = function (item) { return item.querySelector('.content').getBoundingClientRect().height; };
+    var resizeAll = function () {
+        var altura = getVal(gallery, 'grid-auto-rows');
+        var gap = getVal(gallery, 'grid-row-gap');
+        gallery.querySelectorAll('.gallery-item').forEach(function (item) {
+            var el = item;
+            el.style.gridRowEnd = "span " + Math.ceil((getHeight(item) + gap) / (altura + gap));
+        });
+    };
+    gallery.querySelectorAll('img').forEach(function (item) {
+        item.classList.add('byebye');
+        if (item.complete) {
+            console.log(item.src);
+        }
+        else {
+            item.addEventListener('load', function () {
+                var altura = getVal(gallery, 'grid-auto-rows');
+                var gap = getVal(gallery, 'grid-row-gap');
+                var gitem = item.parentElement.parentElement;
+                gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
+                item.classList.remove('byebye');
+            });
+        }
+    });
+    window.addEventListener('resize', resizeAll);
+    gallery.querySelectorAll('.gallery-item').forEach(function (item) {
+        item.addEventListener('click', function () {        
+            item.classList.toggle('full');        
+        });
+    });
+    
+    let christmas = {
+      delay: null,
+      delete: function(){
+          document.body.querySelectorAll('.christmas-lights').forEach(function(ul){
+              ul.remove();
+          });
+      },
+      create: function(){
+          let v = window.innerHeight / 60 + 2,
+              h = window.innerWidth / 60 + 2,
+              data = {
+                  'top': h,
+                  'right': v,
+                  'bottom': h,
+                  'left': v
+              },
+              ul = c = null;
+          for (let position in data) {
+              c = data[position];
+              ul = document.createElement('ul');
+              ul.className = 'christmas-lights';
+              ul.dataset.position = position;
+              for (let i = 0; i <= c; i++) {
+                  ul.append(document.createElement('li'));
+              }
+              document.body.append(ul);
+          }
+      }
+  }
+   
+  document.addEventListener('DOMContentLoaded', function(){
+      christmas.create();
+  });
+   
+  window.addEventListener('resize', function(e) {
+      clearTimeout(christmas.delay);
+      christmas.delay = setTimeout(function(){
+          christmas.delete();
+          christmas.create();
+      }, 100)
+  });
+
+</script>
+    </body>

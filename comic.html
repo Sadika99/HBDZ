@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: #2C3E50;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FD746C, #2C3E50);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FD746C, #2C3E50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+        h1{
+            font-family:cursive;
+        }
+        .back{
+            width:60px;
+            height:60px;
+            background-image: url('images/back.png');
+            background-size: cover;
+            border-radius: 60px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            float: left;
+            margin-left:20px;
+            margin-top:-40px;
+        }
+        .c{
+            width: 70%;
+            height: 80%;
+
+        }
+          
+    </style>
+</head>
+<body>
+    
+    <center>
+        
+    <h1>COMIC</h1>
+    <button onclick="navigate()" class="back"></button>
+    <br>
+    <br><br>
+    <img class="c" src="images/1.png" >
+
+    <br>
+    <img class="c" src="images/2.png" >
+
+    <br>
+    <img class="c" src="images/3.png" >
+
+   
+</center>
+
+<script>
+    function navigate(){
+        window.location.href ="index.html"
+    }
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Crossword</title>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+</head>
+<style>
+    body{
+        background: #c31432;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+    input{
+        width: 1cm;
+        height: 1cm;
+        font-size: 25px;
+        text-transform: uppercase;
+        text-align: center;
+        font-family: cursive;
+        font-weight: bold;
+        color: #b80624;
+        
+    }
+.crossword{
+    display: grid;
+    
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  
+   margin-right: 60%;
+
+  
+}
+.clue{
+    position: absolute;
+    left: 60%;
+    top: 30%;
+    font-family: cursive;
+
+}
+
+.back{
+    width:60px;
+    height:60px;
+    background-image: url('images/back.png');
+    background-size: cover;
+    border-radius: 60px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    float: left;
+    margin-left:20px;
+    margin-top:-40px;
+}
+.s5 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 218px;
+    left: 93px;
+    
+}
+.s6 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 438px;
+    left: 185px;
+}
+.s7 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 526px;
+    left: 185px;
+}
+.s1 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 132px;
+    left: 139px;
+}
+.s2 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 218px;
+    left: 231px;
+}
+.s3 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 218px;
+    left: 322px;
+}
+.s4 {
+    font-size: 10px;
+    vertical-align: super;
+    line-height: 0;
+    position: absolute;
+    top: 350px;
+    left: 459px;
+}
+
+sup{
+    font-weight: bolder;
+}
+
+#res{
+    font-weight: bolder;
+    color: green;
+    
+
+}
+
+#check {
+    width: 100px;
+    height: 50px;
+    background-color: #240b36;
+    color: #b80624;
+    font-size: 20px;
+    font-family: cursive;
+    box-shadow: 1px 3px 4px #b80624 ;
+    border-radius: 50%;
+    position: relative;
+    left: 10%;
+    cursor: pointer;
+}
+
+#retry{
+    width: 100px;
+    height: 50px;
+    background-color: #240b36;
+    color: #b80624;
+    font-size: 20px;
+    font-family: cursive;
+    box-shadow: 1px 3px 4px #b80624 ;
+    border-radius: 50%;
+    position: relative;
+    left: 20%;
+    cursor: pointer;
+}
+
+  
+
+</style>
+<body>
+    <center>
+    <h1>CROSSWORD</h1>
+</center>
+<button onclick="navigate()" class="back"></button>
+    <div class="crossword">
+        <sup class="s5">5</sup>
+        <sup class="s6">6</sup>
+        <sup class="s7">7</sup>
+        <sup class="s1">1</sup>
+        <sup class="s2">2</sup>
+        <sup class="s3">3</sup>
+        <sup class="s4">4</sup>
+
+        
+    <input type="text" maxlength="1" style="grid-column: 2;grid-row: 4;" data-letter="D" id="a">
+    
+
+    
+
+    <input type="text" maxlength="1" style="grid-column: 3;grid-row: 4;" data-letter="I" id="b">
+    <input type="text" maxlength="1" style="grid-column: 4;grid-row: 4;" data-letter="M" id="c">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 4;" data-letter="P" id="d">
+    <input type="text" maxlength="1" style="grid-column: 6;grid-row: 4;" data-letter="L" id="e">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 4;" data-letter="E" id="f">
+   
+
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 3;" data-letter="P" id="g">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 5;" data-letter="R" id="h">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 6;" data-letter="F" id="i">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 7;" data-letter="E" id="j">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 8;" data-letter="C" id="k">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 9;" data-letter="T" id="l">
+    
+
+    <input type="text" maxlength="1" style="grid-column: 3;grid-row: 2;" data-letter="Z" id="m">
+    <input type="text" maxlength="1" style="grid-column: 3;grid-row: 3;" data-letter="A" id="n">
+    <input type="text" maxlength="1" style="grid-column: 3;grid-row: 5;" data-letter="N" id="o">
+
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 5;" data-letter="A" id="p">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 6;" data-letter="V" id="q">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 7;" data-letter="I" id="r">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 8;" data-letter="T" id="s">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 9;" data-letter="H" id="t">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 10;" data-letter="R" id="u">
+    <input type="text" maxlength="1" style="grid-column: 5;grid-row: 11;" data-letter="A" id="v">
+
+    <input type="text" maxlength="1" style="grid-column: 4;grid-row: 11;" data-letter="W" id="w">
+    <input type="text" maxlength="1" style="grid-column: 6;grid-row: 11;" data-letter="T" id="x">
+    <input type="text" maxlength="1" style="grid-column: 7;grid-row: 11;" data-letter="C" id="y">
+    <input type="text" maxlength="1" style="grid-column: 8;grid-row: 11;" data-letter="H" id="z">
+
+    <input type="text" maxlength="1" style="grid-column: 4;grid-row: 9;" data-letter="W" id="ab">
+    <input type="text" maxlength="1" style="grid-column: 6;grid-row: 9;" data-letter="I" id="cd">
+    <input type="text" maxlength="1" style="grid-column: 8;grid-row: 9;" data-letter="E" id="ef">
+    <input type="text" maxlength="1" style="grid-column: 9;grid-row: 9;" data-letter="H" id="gh">
+    <input type="text" maxlength="1" style="grid-column: 10;grid-row: 9;" data-letter="A" id="ij">
+    <input type="text" maxlength="1" style="grid-column: 11;grid-row: 9;" data-letter="T"id="kl">
+
+    <input type="text" maxlength="1" style="grid-column: 10;grid-row: 7;" data-letter="M" id="mn">
+    <input type="text" maxlength="1" style="grid-column: 10;grid-row: 8;" data-letter="A" id="op">
+    <input type="text" maxlength="1" style="grid-column: 10;grid-row: 10;" data-letter="M" id="qr">
+    <input type="text" maxlength="1" style="grid-column: 10;grid-row: 11;" data-letter="S" id="st">
+
+</div>
+<div class="clue">
+ACROSS : <br>
+5. The feature of mine which you complimented me a lot about <br>
+6. My Second Company Name I worked for <br>
+7. The First Gift you presented me 
+<br> <br>
+DOWN : <br>
+1. The name I planned to name my son 😂<br>
+2. My Best Friend <br>
+3. The First song I sung for you in Insta<br>
+4. The First Nickname I used to call you
+<br><br><br><br>
+<button id="check" onclick="check()">CHECK</button>
+<button id="retry" onclick="retry()">RETRY</button>
+<p id="res"></p>
+</div>
+
+<script>
+    function navigate(){
+        window.location.href ="index.html"
+    }
+    
+        function retry() {
+            document.getElementById("res").textContent=""
+            var textboxes = document.querySelectorAll("input[type='text']");
+            
+            for (var i = 0; i < textboxes.length; i++) {
+              textboxes[i].value = "";
+            }
+
+          }
+          
+    
+
+function check(){
+    
+    var a = document.getElementById("a").value;
+    var b = document.getElementById("b").value;
+    var c = document.getElementById("c").value;
+    var d = document.getElementById("d").value;
+    var e = document.getElementById("e").value;
+    var f = document.getElementById("f").value;
+    var g = document.getElementById("g").value;
+    var h = document.getElementById("h").value;
+    var i = document.getElementById("i").value;
+    var j = document.getElementById("j").value;
+    var k = document.getElementById("k").value;
+    var l = document.getElementById("l").value;
+    var m = document.getElementById("m").value;
+    var n = document.getElementById("n").value;
+    var o = document.getElementById("o").value;
+    var p = document.getElementById("p").value;
+    var q = document.getElementById("q").value;
+    var r = document.getElementById("r").value;
+    var s = document.getElementById("s").value;
+    var t = document.getElementById("t").value;
+    var u = document.getElementById("u").value;
+    var v = document.getElementById("v").value;
+    var w = document.getElementById("w").value;
+    var x = document.getElementById("x").value;
+    var y = document.getElementById("y").value;
+    var z = document.getElementById("z").value;
+    var ab = document.getElementById("ab").value;
+    var cd = document.getElementById("cd").value;
+    var ef = document.getElementById("ef").value;
+    var gh = document.getElementById("gh").value;
+    var ij = document.getElementById("ij").value;
+    var kl = document.getElementById("kl").value;
+    var mn = document.getElementById("mn").value;
+    var op = document.getElementById("op").value;
+    var qr = document.getElementById("qr").value;
+    var st = document.getElementById("st").value;
+   
+var right=['Good Job da Kutty Kunjaan',
+'Paravalappa Polachitta Good Job',
+'ADA ADA ADA Goooood dra kanney']
+
+    var wrong=['Thappu da Dubaakooor , Try Again da Powder Dabba',
+    'Ada Dubakoor Payale, Maruka try pandraa',
+    'Eruma maadu maari valandhurka oru Balloon Kooda Oodha Theryaadha']
+    
+if (a=="d" && b=="i" && c=="m" && d=="p" && e=="l" && f=="e"&&  g=="p"&&  h=="r"&& 
+i=="f"&&  j=="e"&&  k=="c"&&  l=="t" && m=="z"&&  n=="a"&&  o=="n"&&  p=="a"&&  q=="v"&& 
+r=="i" && s=="t"&&  t=="h"&& u=="r" && v=="a"&&  w=="w"&&  x=="t"&&  y=="c"&&  z=="h" && 
+ab=="w" && cd=="i" && ef=="e" && gh=="h" &&ij=="a" &&kl=="t" &&mn=="m" &&op=="a" &&qr=="m" &&st=="s")
+
+
+{
+    
+    var rand1= Math.floor(Math.random()*(right.length));
+    
+    document.getElementById("res").innerHTML = right[rand1]
+      
+}
+else {
+
+
+    var rand2= Math.floor(Math.random()*(wrong.length));
+
+document.getElementById("res").innerHTML = wrong[rand2]
+ }
+
+}
+
+
+
+
+
+</script>
+</body>
+</html>
